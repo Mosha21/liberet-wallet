@@ -1,4 +1,3 @@
-const { getConsoleOutput } = require('@jest/console')
 const mongoose = require('mongoose')
 
 mongoose.connect(process.env.MONGODB_URL, {
