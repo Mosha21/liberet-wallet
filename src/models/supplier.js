@@ -25,13 +25,33 @@ const supplierSchema = new mongoose.Schema({
         minlength: 8,
         trim: true
     },
-    wallet: {
+    credits: {
         type: Number,
         default: 0,
-        trim: true,
         validate(value) {
             if(value < 0) throw new Error('Invalid amount')
         }
+    },
+    wallet: {
+        events: [{
+            date: Date,
+            event: String
+        }]
+    },
+    admin: {
+        type: Boolean,
+        default: false
+    },
+    products: {
+        type: Number,
+        default: 0,
+        validate(value) {
+            if(value < 0) throw new Error('Invalid amount')
+        }
+    },
+    campaign: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
@@ -56,6 +76,11 @@ supplierSchema.methods.generateAuthToken = async function () {
     await supplier.save()
 
     return token
+}
+
+// Checks if supplier or admin
+supplierSchema.methods.isAdmin = function () {
+    return this.admin
 }
 
 // Hashes password before saving supplier

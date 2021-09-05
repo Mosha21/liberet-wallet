@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently --names \"MONGO,DEV\" -c \"white,green\" \"C:\\Users\\berna\\mongodb\\bin\\mongod.exe --dbpath=\"C:/Users/berna/mongodb-data\"\" \"env-cmd -f ./config/dev.env nodemon src/index.js\"",
+    "dev": "concurrently --names \"MONGO,DEV\" -c \"white,green\" \"C:\\Users\\berna\\mongodb\\bin\\mongod.exe --dbpath=\"C:/Users/berna/mongodb-data\"\" \"env-cmd -f ./config/dev.env nodemon src/index.js -e js,hbs,css\"",
     "test": "concurrently --names \"MONGO,TEST\" -c \"white,green\" \"C:\\Users\\berna\\mongodb\\bin\\mongod.exe --dbpath=\"C:/Users/berna/mongodb-data\"\" \"env-cmd -f ./config/test.env jest --watch\""
   },
   "author": "",

@@ -1,8 +1,6 @@
 const express = require('express')
 const Supplier = require('../models/supplier')
-const auth = require('../middleware/auth')
 const passport = require('passport')
-const { update } = require('../models/supplier')
 
 const router = new express.Router()
 
@@ -53,9 +51,9 @@ router.patch('/suppliers/me', passport.authenticate('jwt', { session: false }), 
 
 router.delete('/suppliers/me', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-        await req.supplier.remove()
+        await req.user.remove()
 
-        res.send(req.supplier)
+        res.send(req.user)
     } catch (error) {
         res.status(500).send(error)
     }
@@ -67,7 +65,7 @@ router.post('/suppliers/me/wallet/recharge', passport.authenticate('jwt', { sess
     const supplier = req.user
     
     try {
-        supplier.wallet += req.body.amount
+        supplier.credits += req.body.amount
         await supplier.save()
         res.status(200).send(supplier)
     } catch (error) {
@@ -75,6 +73,10 @@ router.post('/suppliers/me/wallet/recharge', passport.authenticate('jwt', { sess
     }
 })
 
-
+router.get('/suppliers/me/wallet', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const supplier = req.user
+    
+    res.status(200).send(supplier.wallet.events)
+})
 
 module.exports = router

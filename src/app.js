@@ -3,6 +3,7 @@ const path = require('path')
 const hbs = require('hbs')
 require('./db/mongoose')
 const supplierRouter = require('./routers/supplier')
+const serviceRouter = require('./routers/services')
 const generalRoutes = require('./routers/routes')
 const passport = require('passport')
 
@@ -22,7 +23,7 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(publicDirectoryPath))
 
 app.use(express.json())
-app.use(supplierRouter, generalRoutes)
+app.use(supplierRouter, serviceRouter, generalRoutes)
 
 require('./services/passport')(passport)
 app.use(passport.initialize())
