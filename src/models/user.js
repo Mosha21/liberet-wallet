@@ -41,7 +41,7 @@ userSchema.methods.toJSON = function () {
 }
 
 // Generate auth token
-user.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '1min' })
 
@@ -51,18 +51,18 @@ user.methods.generateAuthToken = async function () {
 }
 
 // Hashes password before saving user
-user.pre('save', function (next) {
+userSchema.pre('save', async function (next) {
     const user = this
 
     if(user.isModified('password')) {
-        user.password = bcrypt.hash(user.password, 8)
+        user.password = await bcrypt.hash(user.password, 8)
     }
 
     next()
 })
 
 // Find user by email and password
-user.statics.findByCredentials = async function (email, password) {
+userSchema.statics.findByCredentials = async function (email, password) {
     const user = await User.findOne({ email })
     if(!user) throw new Error('Unable to login')
 

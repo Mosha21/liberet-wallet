@@ -1,4 +1,6 @@
-const auth = async (req, res, next) => {
+const passport = require('passport')
+
+const auth = (req, res, next) => {
     next()
 }
 

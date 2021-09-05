@@ -2,8 +2,9 @@ const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
 require('./db/mongoose')
-const modelRouter = require('./routers/model')
+const userRouter = require('./routers/user')
 const generalRoutes = require('./routers/routes')
+const passport = require('passport')
 
 // Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -21,6 +22,9 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(publicDirectoryPath))
 
 app.use(express.json())
-app.use(modelRouter, generalRoutes)
+app.use(userRouter, generalRoutes)
+
+require('./services/passport')(passport)
+app.use(passport.initialize())
 
 module.exports = app
