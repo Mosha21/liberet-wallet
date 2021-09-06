@@ -7,31 +7,32 @@ const services = JSON.parse(sessionStorage.getItem('services'))
 const supplier = JSON.parse(sessionStorage.getItem('supplier'))
 
 function useService(id) {
-    console.log('Oliss')
-    // fetch('/services/' + id, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Authorization': 'Bearer ' + sessionStorage.getItem('authToken'),
-    //     }
-    // }).then((response) => {
-    //     response.json().then((data) => {
-    //         if(!data.error) {
-    //             sessionStorage.setItem('authToken', data.token)
-    //             sessionStorage.setItem('supplier', JSON.stringify(data.supplier))
+    fetch('services/' + id, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('authToken'),
+        }
+    }).then((response) => {
+        if(response.redirected) return alert('Not enough credits')
+        response.json().then((supplier) => {
+            if(supplier) {
+                sessionStorage.setItem('supplier', JSON.stringify(supplier))
 
-    //             window.location.href = '/'
-    //         }
-    //     })
-    // })
+                window.location.href = '/'
+            }
+        })
+    })
 }
 
 services.forEach(service => {
     let node = document.createElement("LI")
-    let a = document.createElement("a");
+    let button = document.createElement("button");
     let text = document.createTextNode(service.name)
-    a.appendChild(text)
-    a.addEventListener("click", useService(service._id), false)
-    node.appendChild(a)
+    button.appendChild(text)
+    button.addEventListener('click', function() {
+        useService(service._id)
+    })
+    node.appendChild(button)
     
     servicesList.appendChild(node)
 });
@@ -61,7 +62,7 @@ rechargeForm.addEventListener('submit', (e) => {
         body: JSON.stringify(body)
     }).then((response) => {
         response.json().then((supplier) => {
-            sessionStorage.setItem('supplier', supplier)
+            sessionStorage.setItem('supplier', JSON.stringify(supplier))
             amount.value = ''
             location.reload()
         })

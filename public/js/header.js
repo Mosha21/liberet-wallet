@@ -8,6 +8,7 @@ fetch('suppliers/me', {
         response.json().then(data => {
             document.getElementById('name').innerHTML = 'Welcome ' + data.supplier.name
             document.getElementById('credits').innerHTML = 'Credits: ' + data.supplier.credits
+            sessionStorage.setItem('supplier', JSON.stringify(data.supplier))
         })
     } else {
         if(window.location.pathname !== '/login') window.location.href = '/login'
