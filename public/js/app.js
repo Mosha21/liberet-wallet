@@ -2,9 +2,30 @@ const rechargeForm = document.querySelector('#credit-recharge')
 const amount = document.querySelector('#credit-amount')
 const servicesList = document.getElementById('services')
 const walletList = document.getElementById('wallet-history')
+const campaignButton = document.getElementById('campaign-button')
 
 const services = JSON.parse(sessionStorage.getItem('services'))
 const supplierObject = JSON.parse(sessionStorage.getItem('supplier'))
+
+if(supplierObject.campaign) campaignButton.textContent = 'Desactivar'
+else campaignButton.textContent = 'Activar'
+
+function useCampaign() {
+    fetch('services/campaign', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('authToken'),
+        }
+    }).then((response) => {
+        response.json().then((supplier) => {
+            if(supplier) {
+                sessionStorage.setItem('supplier', JSON.stringify(supplier))
+
+                window.location.href = '/'
+            }
+        })
+    })
+}
 
 function useService(id) {
     fetch('services/' + id, {
