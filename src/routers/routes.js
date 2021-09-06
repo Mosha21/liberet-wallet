@@ -12,8 +12,13 @@ router.get('', (req, res) => {
 
 router.get('/login', (req, res) => {
     res.render('login', {
-        helpText: 'This is some helpful text.',
         title: 'Login',
+        name: name
+    })
+})
+router.get('/admin', (req, res) => {
+    res.render('admin', {
+        title: 'Admin site',
         name: name
     })
 })

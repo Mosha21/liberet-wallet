@@ -66,6 +66,11 @@ router.post('/suppliers/me/wallet/recharge', passport.authenticate('jwt', { sess
     
     try {
         supplier.credits += parseInt(req.body.amount)
+        supplier.wallet.events.push({
+            event: 'recharge of ' + req.body.amount.toString() + ' credits',
+            date: new Date()
+        })
+
         await supplier.save()
         res.status(200).send(supplier)
     } catch (error) {

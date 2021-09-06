@@ -4,7 +4,7 @@ const servicesList = document.getElementById('services')
 const walletList = document.getElementById('wallet-history')
 
 const services = JSON.parse(sessionStorage.getItem('services'))
-const supplier = JSON.parse(sessionStorage.getItem('supplier'))
+const supplierObject = JSON.parse(sessionStorage.getItem('supplier'))
 
 function useService(id) {
     fetch('services/' + id, {
@@ -27,7 +27,7 @@ function useService(id) {
 services.forEach(service => {
     let node = document.createElement("LI")
     let button = document.createElement("button");
-    let text = document.createTextNode(service.name)
+    let text = document.createTextNode(service.name + ' (' + service.cost + ' credits)')
     button.appendChild(text)
     button.addEventListener('click', function() {
         useService(service._id)
@@ -37,7 +37,7 @@ services.forEach(service => {
     servicesList.appendChild(node)
 });
 
-supplier.wallet.events.forEach(event => {
+supplierObject.wallet.events.forEach(event => {
     let node = document.createElement("LI")
     let text = 'Used ' + event.event + ' - ' + event.date
     let textNode = document.createTextNode(text)

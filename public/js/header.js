@@ -1,3 +1,6 @@
+const supplier = JSON.parse(sessionStorage.getItem('supplier'))
+if(!supplier.admin) document.getElementById("admin").style.display = "block"
+
 fetch('suppliers/me', {
     method: 'GET',
     headers: {

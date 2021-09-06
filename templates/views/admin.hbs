@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Liberet Wallet</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="main-content">
+        {{>header}}
+
+        <div class="add-service">
+            <form id="add-service">
+                Add service
+                <ul style="list-style-type:none;">
+                    <li ><input id="service-name" placeholder="name"></li>
+                    <li><input id="desc" placeholder="description"></li>
+                    <li><input id="cost" placeholder="cost"></li>
+                    <li><button>Add</button></li>
+                </ul>
+            </form>
+        </div>
+    </div>
+
+    {{>footer}}
+
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>
