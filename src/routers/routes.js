@@ -5,22 +5,15 @@ const name = 'Bernardo Moya'
 
 router.get('', (req, res) => {
     res.render('index', {
-        title: 'App',
+        title: 'Liberet Wallet',
         name: name
     })
 })
 
-router.get('/about', (req, res) => {
-    res.render('about', {
-        title: 'About Me',
-        name: name
-    })
-})
-
-router.get('/help', (req, res) => {
-    res.render('help', {
+router.get('/login', (req, res) => {
+    res.render('login', {
         helpText: 'This is some helpful text.',
-        title: 'Help',
+        title: 'Login',
         name: name
     })
 })

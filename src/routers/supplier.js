@@ -65,7 +65,7 @@ router.post('/suppliers/me/wallet/recharge', passport.authenticate('jwt', { sess
     const supplier = req.user
     
     try {
-        supplier.credits += req.body.amount
+        supplier.credits += parseInt(req.body.amount)
         await supplier.save()
         res.status(200).send(supplier)
     } catch (error) {
